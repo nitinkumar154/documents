@@ -1,0 +1,49 @@
+CREATE 
+    ALGORITHM = UNDEFINED 
+    DEFINER = `root`@`localhost` 
+    SQL SECURITY DEFINER
+VIEW `emi_integration`.`emi_data_denormalized` AS
+    SELECT DISTINCT
+        `emi_integration`.`issuer_scheme_model_terminal`.`utid` AS `utid`,
+        `emi_integration`.`model_serial_numbers`.`model_serial_number` AS `model_serial_number`,
+        `emi_integration`.`model_serial_numbers`.`is_emi_used` AS `is_emi_used`,
+        `emi_integration`.`issuer_scheme_model`.`issuer_scheme_model_code` AS `issuer_scheme_model_code`,
+        `emi_integration`.`issuer_scheme_model_terminal`.`bajaj_product_type_code` AS `bajaj_product_type_code`,
+        `emi_integration`.`issuer_scheme_model_terminal`.`dealer_id` AS `dealer_id`,
+        `emi_integration`.`issuer_scheme_model_terminal`.`issuer_custom_field` AS `issuer_custom_field`,
+        `emi_integration`.`issuer_scheme_model_terminal`.`issuer_scheme_terminal_sync_status` AS `issuer_scheme_terminal_sync_status`,
+        `emi_integration`.`issuer_scheme_model_terminal`.`issuer_scheme_onus_offus` AS `issuer_scheme_onus_offus`,
+        `emi_integration`.`categories`.`category_code` AS `category_code`,
+        `emi_integration`.`categories`.`category_display_name` AS `category_display_name`,
+        `emi_integration`.`models`.`model_code` AS `model_code`,
+        `emi_integration`.`models`.`model_display_number` AS `model_display_number`,
+        `emi_integration`.`manufacturers`.`manufacturer_display_name` AS `manufacturer_display_name`,
+        `emi_integration`.`manufacturers`.`manufacturer_code` AS `manufacturer_code`,
+        `emi_integration`.`manufacturers`.`bajaj_manufacturer_code` AS `bajaj_manufacturer_code`,
+        `emi_integration`.`issuer_schemes`.`issuer_scheme_code` AS `issuer_scheme_code`,
+        `emi_integration`.`issuer_schemes`.`issuer_scheme_display_name` AS `issuer_scheme_display_name`,
+        `emi_integration`.`issuer_schemes`.`issuer_rate_of_interest` AS `issuer_rate_of_interest`,
+        `emi_integration`.`issuer_banks`.`issuer_bank_code` AS `issuer_bank_code`,
+        `emi_integration`.`issuer_banks`.`emi_bank_code` AS `emi_bank_code`,
+        `emi_integration`.`issuer_banks`.`issuer_bank_display_name` AS `issuer_bank_display_name`,
+        `emi_integration`.`emi_tenures`.`emi_tenure_code` AS `emi_tenure_code`,
+        `emi_integration`.`emi_tenures`.`emi_tenure_display_name` AS `emi_tenure_display_name`,
+        `emi_integration`.`emi_tenures`.`emi_tenure_months` AS `emi_tenure_months`,
+        `emi_integration`.`issuer_schemes`.`advance_emi` AS `advance_emi`,
+        `emi_integration`.`issuer_schemes`.`bajaj_issuer_scheme_code` AS `bajaj_issuer_scheme_code`,
+        `emi_integration`.`issuer_schemes`.`innoviti_subvention` AS `innoviti_subvention`,
+        `emi_integration`.`issuer_schemes`.`general_scheme` AS `general_scheme`,
+        `emi_integration`.`issuer_schemes`.`max_amount` AS `max_amount`,
+        `emi_integration`.`issuer_schemes`.`min_amount` AS `min_amount`,
+        `emi_integration`.`issuer_schemes`.`scheme_start_date` AS `scheme_start_date`,
+        `emi_integration`.`issuer_schemes`.`scheme_end_date` AS `scheme_end_date`
+    FROM
+        ((((((((`emi_integration`.`issuer_scheme_model_terminal`
+        LEFT JOIN `emi_integration`.`issuer_scheme_model` ON ((`emi_integration`.`issuer_scheme_model_terminal`.`issuer_scheme_model_code` = `emi_integration`.`issuer_scheme_model`.`issuer_scheme_model_code`)))
+	LEFT JOIN `emi_integration`.`models` ON ((`emi_integration`.`models`.`model_code` = `emi_integration`.`issuer_scheme_model`.`model_code`)))
+        LEFT JOIN `emi_integration`.`categories` ON ((`emi_integration`.`categories`.`category_code` = `emi_integration`.`models`.`category_code`)))
+        LEFT JOIN `emi_integration`.`manufacturers` ON ((`emi_integration`.`manufacturers`.`manufacturer_code` = `emi_integration`.`models`.`manufacturer_code`)))
+        LEFT JOIN `emi_integration`.`issuer_schemes` ON ((`emi_integration`.`issuer_schemes`.`issuer_scheme_code` = `emi_integration`.`issuer_scheme_model`.`issuer_scheme_code`)))
+        LEFT JOIN `emi_integration`.`issuer_banks` ON ((`emi_integration`.`issuer_banks`.`issuer_bank_code` = `emi_integration`.`issuer_schemes`.`issuer_bank_code`)))
+        LEFT JOIN `emi_integration`.`emi_tenures` ON ((`emi_integration`.`emi_tenures`.`emi_tenure_code` = `emi_integration`.`issuer_schemes`.`emi_tenure_code`)))
+        LEFT JOIN `emi_integration`.`model_serial_numbers` ON ((`emi_integration`.`model_serial_numbers`.`model_code` = `emi_integration`.`models`.`model_code`)))

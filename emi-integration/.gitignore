@@ -1,0 +1,42 @@
+
+# Java class files 
+*.class 
+
+
+
+
+# Eclipse project files 
+.classpath 
+.project 
+.settings/ 
+
+
+
+
+
+
+
+#Gradle 
+.gradletasknamecache 
+.gradle/ 
+build/ 
+bin/
+gradle/
+gradlew
+gradlew.bat
+temp
+mapping_files
+
+#log
+log
+/.gradle/
+/build/
+
+#Backup/swap files
+*.xlsx#
+*.bak
+
+#lucence docs
+com.innoviti.emi.entity.core.Scheme
+com.innoviti.emi.entity.core.Model
+auto
